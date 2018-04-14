@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Parse-free code formatting</title>
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/black.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+
+  <style>
+    img.plain {
+      border: 0;
+      background: none !important;
+    }
+
+    img.inline {
+      height: 1em;
+      margin: 0 !important;
+    }
+
+    .reveal small {
+      vertical-align: initial;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!--
+          structure:
+          1. example use cases of code formatting
+            * CLI (`$ prettier index.js`)
+            * editor integration (screenshot of "Reformat code    Ctrl+Alt+L")
+            * browser devtools (screenshot of chrome "Pretty print" with some minified JS)
+            * file viewing (`$ less styles.min.css`)
+          2. how do we usually format code? depict types of input and output
+            * lexing
+            * parsing
+            * printing
+              * what do we even mean by "printing out in a nice way" => aspects
+          3. now what if we just don't parse?
+            * drawbacks
+            * benefits
+          4. use cases again => CLI/editor red, browser/file green
+          5. in paper we looked at a simple Lisp
+            * token types
+          6. how do we format this? show the simplified, primitive rules without edge cases, extensions etc:
+            * spacing rules (w/ example in-out, schematic allowsSpace construct in for-of loop)
+            * hard line breaks (w/ example of two top-level expressions, code: nestingLevel inc/dec IfStatements ignoring spacing)
+            * greedy line-filling soft line breaks (show advantegeous example, show code "if(...>MAX_LINE_LENGTH)" etc)
+            * nesting-based indentation (example of nested expressions, code: contents of softBreak())
+          7. results => example in-out, good / bad / ugly
+          8. lookout => real language, compare with other formatters, specific use case
+        -->
+      <section>
+        <div>
+          <h2>Parse-free code formatting</h2>
+        </div>
+        <div>
+          <small>
+              Tim Seckinger
+          </small>
+          <br>
+          <small>
+              <img data-src="img/github-logo.png" alt="GitHub Logo" class="plain inline">
+              jeysal
+          </small>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+
+  <script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+      history: true,
+      dependencies: [{
+          src: 'plugin/markdown/marked.js'
+        },
+        {
+          src: 'plugin/markdown/markdown.js'
+        },
+        {
+          src: 'plugin/notes/notes.js',
+          async: true
+        },
+        {
+          src: 'plugin/highlight/highlight.js',
+          async: true,
+          callback: function() {
+            hljs.initHighlightingOnLoad();
+          }
+        }
+      ],
+    });
+  </script>
+</body>
+
+</html>
