@@ -36,6 +36,13 @@
     .reveal small {
       vertical-align: initial;
     }
+
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 0 1em;
+      align-items: center;
+    }
   </style>
 </head>
 
@@ -83,6 +90,7 @@
           </small>
         </div>
       </section>
+
       <section>
         <h3>formatting use cases</h3>
         <div style="
@@ -104,6 +112,93 @@
           <p>file viewing</p>
           <code><small>$ less styles.min.css</small></code>
         </div>
+      </section>
+
+      <section>
+        <h3>formatting steps</h3>
+        <section>
+          <ul>
+            <li>Lexing</li>
+            <li>Parsing</li>
+            <li>Printing</li>
+          </ul>
+        </section>
+        <section>
+          <p class="step-grid">
+            <code><small>fn (42 ,1337 ) ;</small></code>
+            <code>lexing<br/>==></code>
+            <code><small>
+              fn<br/>
+              (<br/>
+              42<br/>
+              ,<br/>
+              1337<br/>
+              )<br/>
+              ;<br/>
+            </small></code>
+          </p>
+          <aside class="notes">
+            input: unformatted code<br/> output: list of tokens
+          </aside>
+        </section>
+        <section>
+          <p class="step-grid">
+            <code><small>
+              fn<br/>
+              (<br/>
+              42<br/>
+              ,<br/>
+              1337<br/>
+              )<br/>
+              ;<br/>
+            </small></code>
+            <code>parsing<br/>==></code>
+            <code><small><small style="text-align: left;">
+              Program<br/>
+              body[0]:<br/>
+              &nbsp;ExpressionStatement<br/>
+              &nbsp;expression:<br/>
+              &nbsp;&nbsp;CallExpression<br/>
+              &nbsp;&nbsp;callee:<br/>
+              &nbsp;&nbsp;&nbsp;Identifier<br/>
+              &nbsp;&nbsp;&nbsp;name: 'fn'<br/>
+              &nbsp;&nbsp;arguments[0]:<br/>
+              &nbsp;&nbsp;&nbsp;NumericLiteral<br/>
+              &nbsp;&nbsp;&nbsp;value: 42<br/>
+              &nbsp;&nbsp;arguments[1]:<br/>
+              &nbsp;&nbsp;&nbsp;NumericLiteral<br/>
+              &nbsp;&nbsp;&nbsp;value: 1337<br/>
+            </small></small></code>
+          </p>
+          <aside class="notes">
+            input: list of tokens<br/> output: syntax tree
+          </aside>
+        </section>
+        <section>
+          <p class="step-grid">
+            <code><small><small style="text-align: left;">
+              Program<br/>
+              body[0]:<br/>
+              &nbsp;ExpressionStatement<br/>
+              &nbsp;expression:<br/>
+              &nbsp;&nbsp;CallExpression<br/>
+              &nbsp;&nbsp;callee:<br/>
+              &nbsp;&nbsp;&nbsp;Identifier<br/>
+              &nbsp;&nbsp;&nbsp;name: 'fn'<br/>
+              &nbsp;&nbsp;arguments[0]:<br/>
+              &nbsp;&nbsp;&nbsp;NumericLiteral<br/>
+              &nbsp;&nbsp;&nbsp;value: 42<br/>
+              &nbsp;&nbsp;arguments[1]:<br/>
+              &nbsp;&nbsp;&nbsp;NumericLiteral<br/>
+              &nbsp;&nbsp;&nbsp;value: 1337<br/>
+            </small></small></code>
+            <code>printing<br/>==></code>
+            <code><small>fn(42, 1337);</small></code>
+            <aside class="notes">
+              input: syntax tree<br/> output: formatted code
+            </aside>
+        </section>
+        </p>
       </section>
     </div>
   </div>
