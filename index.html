@@ -43,6 +43,13 @@
       grid-gap: 0 1em;
       align-items: center;
     }
+
+    .printing-grid {
+      display: grid;
+      grid-template: "heading heading heading" 1fr "before operation after" 4fr / 2fr 1fr 2fr;
+      grid-gap: 1em 0;
+      align-items: center;
+    }
   </style>
 </head>
 
@@ -199,6 +206,107 @@
             </aside>
         </section>
         </p>
+      </section>
+      <section>
+        <h3>printing</h3>
+        <section>
+          "printing it back out"
+          <aside class="notes">
+            output differs from input.<br/> but in what way?
+          </aside>
+        </section>
+        <section>
+          <div class="printing-grid">
+            <h4 style="grid-area: heading;">spacing</h4>
+            <code style="grid-area: before;"><small>fn (42 ,1337 ) ;</small></code>
+            <code style="grid-area: operation;">==></code>
+            <code style="grid-area: after;"><small>fn(42, 1337);</small></code>
+          </div>
+          <aside class="notes">
+            just what we've seen in the example
+          </aside>
+        </section>
+        <section>
+          <div class="printing-grid">
+            <h4 style="grid-area: heading;">indentation</h4>
+            <code style="grid-area: before;"><small style="text-align: left;">
+              if(b) {<br/>
+              fn();<br/>
+              }
+            </small></code>
+            <code style="grid-area: operation;">==></code>
+            <code style="grid-area: after;"><small style="text-align: left;">
+              if(b) {<br/>
+              &nbsp;&nbsp;fn();<br/>
+              }
+            </small></code>
+          </div>
+          <aside class="notes">
+            helps understand control flow and other nested structures
+          </aside>
+        </section>
+        <section>
+          <div class="printing-grid">
+            <h4 style="grid-area: heading;">hard line breaks</h4>
+            <code style="grid-area: before;"><small>
+              fn(1); fn(2);
+            </small></code>
+            <code style="grid-area: operation;">==></code>
+            <code style="grid-area: after;"><small>
+              fn(1);<br/>
+              fn(2);
+            </small></code>
+          </div>
+          <aside class="notes">
+            where we always want to see line breaks because of surrounding tokens<br/> e.g. after semicolon
+          </aside>
+        </section>
+        <section>
+          <div class="printing-grid">
+            <h4 style="grid-area: heading;">soft line breaks</h4>
+            <code style="grid-area: before; font-size: x-small;">
+              let someVar = someFunc(someParam, someOtherParam);
+            </code>
+            <code style="grid-area: operation;">==></code>
+            <code style="grid-area: after; text-align: left;">
+              <small class="fragment fade-up" data-fragment-index="0" style="width: 100%;">
+                <small class="fragment shrink" data-fragment-index="1" style="width: 100%;">
+                  someVar =<br/>
+                  &nbsp;&nbsp;someFunc(someParam, someOtherParam);
+                </small>
+              </small>
+              <small class="fragment fade-up" data-fragment-index="1" style="width: 100%;">
+                <small class="fragment shrink" data-fragment-index="2" style="width: 100%;">
+                  someVar = someFunc(<br/>
+                  &nbsp;&nbsp;someParam, someOtherParam);
+                </small>
+              </small>
+              <small class="fragment fade-up" data-fragment-index="2" style="width: 100%;">
+                <small class="fragment shrink" data-fragment-index="3" style="width: 100%;">
+                  someVar = someFunc(someParam,<br/>
+                  &nbsp;&nbsp;someOtherParam);
+                </small>
+              </small>
+              <small class="fragment fade-up" data-fragment-index="3" style="width: 100%;">
+                <small class="fragment shrink" data-fragment-index="4" style="width: 100%;">
+                  someVar = someFunc(<br/>
+                  &nbsp;&nbsp;someParam,<br/>
+                  &nbsp;&nbsp;someOtherParam,<br/>
+                  );
+                </small>
+              </small>
+            </code>
+          </div>
+          <aside class="notes">
+            arguably the most complex aspect<br/> making sure lines do not get too long for output device / user comfort<br/> multiple ways
+            <ol>
+              <li>breaking as high as possible in AST</li>
+              <li>distributing the line length evenly</li>
+              <li>breaking as late as possible</li>
+              <li>grouping style, handy with trailing comma for argument reordering</li>
+            </ol>
+          </aside>
+        </section>
       </section>
     </div>
   </div>
