@@ -83,6 +83,28 @@
           </small>
         </div>
       </section>
+      <section>
+        <h3>formatting use cases</h3>
+        <div style="
+            display: grid;
+            grid-template: repeat(2, 1fr 2fr) / repeat(2, 1fr);
+            grid-auto-flow: column;
+            grid-gap: 0 2em;
+            justify-items: center;
+          ">
+          <p>CLI</p>
+          <code><small>$ prettier index.js</small></code>
+
+          <p>editor integration</p>
+          <img data-src="img/format-document-screenshot.png" />
+
+          <p>browser devtools</p>
+          <img data-src="img/chrome-pretty-print-screenshot.png" />
+
+          <p>file viewing</p>
+          <code><small>$ less styles.min.css</small></code>
+        </div>
+      </section>
     </div>
   </div>
 
