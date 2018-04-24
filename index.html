@@ -374,6 +374,31 @@
             can't really tell without parsing<br> but we need to know if we want '-x' without space but 'y - x' with space
           </aside>
         </section>
+        <section>
+          <h4>consistency</h4>
+          <p><small style="text-align: left;"><code>a +<br/>&nbsp;&nbsp;(b * c)</code></small></p>
+          <p><small><code style="text-align: left;">a + b * c</code></small></p>
+          <aside class="notes">
+            These code snippets have the same abstract syntax, but different concrete syntax.<br/> We might want them printed the same, but cannot ensure that.<br/> Without parsing, we cannot tell they are the same.
+          </aside>
+        </section>
+        <section>
+          <h4>power</h4>
+          <small><code>((1) + ((2) * ((3))))</code></small>
+          <aside class="notes">
+            Some formatters would remove the unnecessary parentheses.<br/> We cannot, because we do not know whether it would alter semantics.<br/>(especially the last set of parentheses around the multiplication)
+          </aside>
+        </section>
+        <section>
+          <h4>flexibility</h4>
+          <ul>
+            <li>output format</li>
+            <li>configuration options</li>
+          </ul>
+          <aside class="notes">
+            Can't produce all conceivable output formats a regular formatter could.<br/>Small format changes require fundamental alg changes.<br/>(may be a good or bad thing, depending on who you ask -<br/>lately, many formatters opted to provide very minimal config options)
+          </aside>
+        </section>
       </section>
     </div>
   </div>
