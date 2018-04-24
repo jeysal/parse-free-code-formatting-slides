@@ -50,6 +50,23 @@
       grid-gap: 1em 0;
       align-items: center;
     }
+
+    .skipping-parsing-example .content {
+      display: grid;
+      grid-template: "l m r" / 3fr 1fr 3fr;
+    }
+
+    .skipping-parsing-example .left {
+      grid-area: l;
+      text-align: right;
+      color: gray;
+    }
+
+    .skipping-parsing-example .right {
+      grid-area: r;
+      text-align: left;
+      color: gray;
+    }
   </style>
 </head>
 
@@ -305,6 +322,56 @@
               <li>breaking as late as possible</li>
               <li>grouping style, handy with trailing comma for argument reordering</li>
             </ol>
+          </aside>
+        </section>
+      </section>
+      <section>
+        <h3>skipping parsing</h3>
+        <section>
+          <h4>why parse at all?</h4>
+        </section>
+        <section class="skipping-parsing-example">
+          <small><code class="content">
+            <span class="fragment fade-in left" data-fragment-index="0">
+              <span class="fragment fade-out" data-fragment-index="1">
+                let c = (a + b
+              </span>
+            </span>
+            <span class="fragment fade-in left" data-fragment-index="2">
+              <span class="fragment fade-out" data-fragment-index="3">
+                if (a == b
+              </span>
+            </span>
+            <span class="fragment fade-in left" data-fragment-index="4">
+              <span class="fragment fade-out" data-fragment-index="5">
+                int y = (int
+              </span>
+            </span>
+            <span style="grid-area: m;">) - x</span>
+            <span class="fragment fade-in right" data-fragment-index="0">
+              <span class="fragment fade-out" data-fragment-index="1">
+                ;
+              </span>
+            </span>
+            <span class="fragment fade-in right" data-fragment-index="2">
+              <span class="fragment fade-out" data-fragment-index="3">
+                ;
+              </span>
+            </span>
+            <span class="fragment fade-in right" data-fragment-index="4">
+              <span class="fragment fade-out" data-fragment-index="5">
+                ;
+              </span>
+            </span>
+          </code></small>
+          <aside class="notes">
+            what are these tokens?
+            <ol>
+              <li>probably a binary expression with a parenthesized operand on the left and an identifier 'x' on the right</li>
+              <li>or perhaps the consequent branch of an if statement with a unary expression</li>
+              <li>or perhaps a type cast of '-x'</li>
+            </ol>
+            can't really tell without parsing<br> but we need to know if we want '-x' without space but 'y - x' with space
           </aside>
         </section>
       </section>
