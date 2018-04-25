@@ -33,6 +33,14 @@
       margin: 0 !important;
     }
 
+    img.fragment.highlight-green.visible {
+      border-color: #17ff2e;
+    }
+
+    img.fragment.highlight-red.visible {
+      border-color: #ff2c2d;
+    }
+
     .reveal small {
       vertical-align: initial;
     }
@@ -434,6 +442,36 @@
             To adapt to new language, just change lexer, not parser.<br/> If language even uses similar symbols,<br/> no changes required at all,<br/> even if they appear in completely different contexts.
           </aside>
         </section>
+      </section>
+
+      <section>
+        <h3>formatting use cases</h3>
+        <div style="
+            display: grid;
+            grid-template: repeat(2, 1fr 2fr) / repeat(2, 1fr);
+            grid-auto-flow: column;
+            grid-gap: 0 2em;
+            justify-items: center;
+          ">
+          <p class="fragment highlight-red" data-fragment-index="0">CLI</p>
+          <code class="fragment highlight-red" data-fragment-index="0">
+            <small>$ prettier index.js</small>
+          </code>
+
+          <p class="fragment highlight-red" data-fragment-index="1">editor integration</p>
+          <img data-src="img/format-document-screenshot.png" class="fragment highlight-red" data-fragment-index="1" />
+
+          <p class="fragment highlight-green" data-fragment-index="2">browser devtools</p>
+          <img data-src="img/chrome-pretty-print-screenshot.png" class="fragment highlight-green" data-fragment-index="2" />
+
+          <p class="fragment highlight-green" data-fragment-index="3">file viewing</p>
+          <code class="fragment highlight-green" data-fragment-index="3">
+            <small>$ less styles.min.css</small>
+          </code>
+        </div>
+        <aside class="notes">
+          for CLI not suitable because the source files devs work with should have ideal format.<br/>neither for editor, same reason.<br/>browser devtools ok, this code is generated and often megabytes large, so performance is important.<br/>file viewing also ok, output usually only shown once and then discarded; good performance does not disturb workflow.
+        </aside>
       </section>
     </div>
   </div>
