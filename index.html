@@ -224,6 +224,7 @@
         </section>
         </p>
       </section>
+
       <section>
         <h3>printing</h3>
         <section>
@@ -325,6 +326,7 @@
           </aside>
         </section>
       </section>
+
       <section>
         <h3>skipping parsing</h3>
         <section>
@@ -397,6 +399,39 @@
           </ul>
           <aside class="notes">
             Can't produce all conceivable output formats a regular formatter could.<br/>Small format changes require fundamental alg changes.<br/>(may be a good or bad thing, depending on who you ask -<br/>lately, many formatters opted to provide very minimal config options)
+          </aside>
+        </section>
+        <section>
+          <h4>efficiency</h4>
+          parsing time ≫ lexing time
+          <aside class="notes">
+            even though asymptotic complexity is similar,<br/> parsing usually takes multiple times longer than lexing.<br/>So let's skip it.
+          </aside>
+        </section>
+        <section>
+          <h4>streaming</h4>
+          <p style="text-align: left;">
+            <code>if(a==b){fn(1);fn<span style="color: dimgray;">(2);}</span></code>
+          </p>
+          <hr/>
+          <p style="text-align: left;">
+            <code>
+              if (a == b) {<br/>
+              &nbsp;&nbsp;fn(1);<br/>
+              <span style="color: dimgray;">
+              &nbsp;&nbsp;fn
+              </span>
+            </code>
+          </p>
+          <aside class="notes">
+            We can trivially start printing output very early<br/>and continue as the input is lexed.
+          </aside>
+        </section>
+        <section>
+          <h4>adaptability</h4>
+          no coupling to language syntax
+          <aside class="notes">
+            To adapt to new language, just change lexer, not parser.<br/> If language even uses similar symbols,<br/> no changes required at all,<br/> even if they appear in completely different contexts.
           </aside>
         </section>
       </section>
