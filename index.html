@@ -476,14 +476,106 @@
 
       <section>
         <h3>Lisp-like syntax</h3>
-        <code>(let x '(+ 1 y))</code>
-        <aside class="notes">
+        <section>
+          <code>(let x '(+ 1 y))</code>
+          <aside class="notes">
+            <ul>
+              <li>s-expressions</li>
+              <li>keywords, identifiers, operators, literals</li>
+              <li>prefixes</li>
+            </ul>
+          </aside>
+        </section>
+        <section>
+          <h4>spacing</h4>
+          <p>always space, except ...</p>
           <ul>
-            <li>s-expressions</li>
-            <li>keywords, identifiers, operators, literals</li>
-            <li>prefixes</li>
+            <li><code>(x</code></li>
+            <li><code>x)</code></li>
+            <li><code>'x</code></li>
           </ul>
-        </aside>
+          <aside class="notes">
+            including multiple consecutive parentheses<br/> including '(...)
+          </aside>
+        </section>
+        <section>
+          <p data-markdown>
+            ```javascript
+            for (const { type, value } of tokens) {
+              if (prevAllowsSpace َ&& allowsSpaceBefore(type))
+                code += ' ';
+
+              // ...
+
+              prevAllowsSpace = allowsSpaceAfter(type);
+            }
+            ```
+          </p>
+        </section>
+        <section>
+          <h4>indentation</h4>
+          <p>count parentheses to track nesting level <em>n</em></p>
+          <p>after linebreak, insert <em>n</em> tabs / <em>m * n</em> spaces</p>
+          <small style="text-align: left;"><code>(a b c<br/>&nbsp;&nbsp;(d e<br/>&nbsp;&nbsp;&nbsp;&nbsp;f))</code></small>
+          <aside class="notes">
+            m being a positive integer => indentation factor
+          </aside>
+        </section>
+        <section>
+          <p data-markdown>
+            ```javascript
+            breakLine();
+
+            const indentSize = nestingLevel * INDENT_SIZE;
+            const indentation = Array(indentSize).fill(' ').join('');
+
+            code += indentation;
+            lineLength = indentSize;
+            ```
+          </p>
+        </section>
+        <section>
+          <h4>hard line breaks</h4>
+          <p>break after indentation counter hits 0</p>
+          <small style="text-align: left;"><code>(a (b (c d)))<br/>(e f)</code></small>
+          <aside class="notes">
+            plus a few more cases involving comments or if we want to preserve empty lines
+          </aside>
+        </section>
+        <section>
+          <p data-markdown>
+            ```javascript
+            if(type === 'leftPar')
+              nestingLevel++;
+
+            if(type === 'rightPar' && --nestingLevel === 0)
+              code += '\n';
+            ```
+          </p>
+        </section>
+        <section>
+          <h4>soft line breaks</h4>
+          <ul>
+            <li>nesting-based</li>
+            <li>uniform length distribution</li>
+            <li>greedy line-filling</li>
+          </ul>
+          <aside class="notes">
+            nesting-based example:<br/>Bagge & Hasu essentially break as high as possible<br/><br/>greedy line-filling chosen not because it is particularly pretty,<br/> but because it is very simple and I wanted to implement something in this paper still - others would have made it a lot longer.
+          </aside>
+        </section>
+        <section>
+          <p data-markdown>
+            ```javascript
+            if (lineLength + printLength > MAX_LINE_LENGTH) {
+              softBreak();
+
+              if (spaceBefore) printLength--;
+              spaceBefore = false;
+            }
+            ```
+          </p>
+        </section>
       </section>
     </div>
   </div>
