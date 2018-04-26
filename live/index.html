@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <style>
+    body {
+      margin: 10%
+    }
+
+    #code-in,
+    #code-out {
+      background-color: dimgray;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
+    <textarea rows="32" id="code-in"></textarea>
+    <textarea rows="32" id="code-out" readonly></textarea>
+  </div>
+
+  <script src="https://unpkg.com/cajon@0.4.4"></script>
+  <script>
+    const codeIn = document.querySelector('#code-in');
+    const codeOut = document.querySelector('#code-out');
+    require([
+      '../formatter/src/lexer.js',
+      '../formatter/src/printer.js',
+      '../formatter/src/index.js',
+    ], (tokenize, print, format) => {
+      const updateCode = () => {
+        const inputCode = codeIn.value;
+        let outputCode = '';
+
+        if (inputCode.length > 1)
+          try {
+            outputCode = format(inputCode);
+          } catch (e) {
+            console.warn('cannot format input code', e);
+          }
+
+        codeOut.value = outputCode;
+      };
+
+      codeIn.value = `
+; factorial
+(defun factorial(n)(if(=n 0)1(*n(factorial(-n 1)))))
+
+; fibonacci
+(defun fib(n)(if(lte n 2)1(+(fib(-n 1))(fib(-n 2)))))
+
+; birthday paradox, already well-formatted
+(defconstant yearsize 365)
+(defun birthdayparadox (probability numberofpeople)
+  (let ((newprobability (* (/
+      (- yearsize numberofpeople) yearsize) probability)))
+    (if (lt newprobability (/ 1 2))
+        (1+ numberofpeople)
+        (birthdayparadox newprobability
+                         (1+ numberofpeople)))))
+`;
+
+      codeIn.addEventListener('input', updateCode);
+      updateCode();
+    });
+  </script>
+</body>
+
+</html>
